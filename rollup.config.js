@@ -27,6 +27,8 @@ const config = {
     nodeResolve(),
     commonjs(),
     replace({
+      "__VUE_OPTIONS_API__": JSON.stringify(false),
+      "__VUE_PROD_DEVTOOLS__": JSON.stringify(false),
       "process.env.NODE_ENV": JSON.stringify("production"),
     }),
     terser(),
