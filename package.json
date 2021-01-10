@@ -1,9 +1,10 @@
 {
   "name": "@hyrious/use-reactive",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "use vue's reactive in react hooks",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
+  "browser": "dist/index.js",
   "types": "src/index.d.ts",
   "files": [
     "src",

@@ -12,7 +12,11 @@ const config = {
   output: [
     {
       file: pkg.main,
-      format: "cjs",
+      format: "iife",
+      globals: {
+        'react': 'React'
+      },
+      name: "UseReactive",
       sourcemap: true,
     },
     {
