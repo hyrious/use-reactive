@@ -4,7 +4,7 @@ Use vue's reactivity api in react.
 
 ### Usage
 
-```js
+```jsx
 import { useReactive } from "@hyrious/use-reactive";
 function Counter() {
   const state = useReactive({ count: 0 });
@@ -21,7 +21,7 @@ import { reactive, watchEffect } from "vue";
 const state = reactive({ count: 0 });
 watchEffect(() => {
   console.log(state.count);
-  // accessing "state.count" triggers a proxy's get handler
+  // accessing "state.count" triggers a proxy's get handler.
   // vue depends on the proxy to track it, so the next time
   // state.count changes, watchEffect will run again.
 
