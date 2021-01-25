@@ -26,8 +26,8 @@ export function useReactive(state) {
   const [, forceUpdate] = useState(0);
   const react = useRef(reactive(state));
   useEffect(() => watchEffect(() => {
+    touch(state, react.current);
     if (counter.current === 0) {
-      touch(state, react.current);
       counter.current++;
     } else {
       forceUpdate((e) => ~e);
