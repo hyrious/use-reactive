@@ -1,6 +1,6 @@
 // @ts-check
 import { useEffect, useRef, useState } from "react";
-import { reactive, watchEffect } from "vue";
+import { reactive, watchEffect } from "@vue/runtime-core";
 
 /**
  * touch proxy.key by ref.key, to let watchEffect know
@@ -25,13 +25,17 @@ export function useReactive(state) {
   const counter = useRef(0);
   const [, forceUpdate] = useState(0);
   const react = useRef(reactive(state));
-  useEffect(() => watchEffect(() => {
-    touch(state, react.current);
-    if (counter.current === 0) {
-      counter.current++;
-    } else {
-      forceUpdate((e) => ~e);
-    }
-  }), []);
+  useEffect(
+    () =>
+      watchEffect(() => {
+        touch(state, react.current);
+        if (counter.current === 0) {
+          counter.current++;
+        } else {
+          forceUpdate((e) => ~e);
+        }
+      }),
+    []
+  );
   return react.current;
 }
