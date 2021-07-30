@@ -12,17 +12,24 @@ const config = {
   input: "src/index.mjs",
   output: [
     {
+      file: pkg.module,
+      format: "es",
+      sourcemap: true,
+      sourcemapExcludeSources: true,
+    },
+    {
       file: pkg.main,
+      format: "cjs",
+      sourcemap: true,
+      sourcemapExcludeSources: true,
+    },
+    {
+      file: pkg.jsdelivr,
       format: "iife",
       globals: {
         react: "React",
       },
       name: "UseReactive",
-      sourcemap: true,
-    },
-    {
-      file: pkg.module,
-      format: "es",
       sourcemap: true,
     },
   ],
@@ -32,9 +39,12 @@ const config = {
     nodeResolve(),
     commonjs(),
     replace({
-      __VUE_OPTIONS_API__: JSON.stringify(false),
-      __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
-      "process.env.NODE_ENV": JSON.stringify("production"),
+      values: {
+        __VUE_OPTIONS_API__: JSON.stringify(false),
+        __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
+        "process.env.NODE_ENV": JSON.stringify("production"),
+      },
+      preventAssignment: true,
     }),
     terser(),
   ],

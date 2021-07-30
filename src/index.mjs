@@ -22,14 +22,14 @@ function touch(ref, proxy) {
  * @param {object} state - will be passed to vue's reactive()
  */
 export function useReactive(state) {
-  const counter = useRef(0);
+  const [react] = useState(() => reactive(state));
   const [, forceUpdate] = useState(0);
-  const react = useRef(reactive(state));
+  const counter = useRef(0);
   useEffect(
     () =>
       watchEffect(() => {
-        touch(state, react.current);
         if (counter.current === 0) {
+          touch(state, react);
           counter.current++;
         } else {
           forceUpdate((e) => ~e);
@@ -37,5 +37,5 @@ export function useReactive(state) {
       }),
     []
   );
-  return react.current;
+  return react;
 }
