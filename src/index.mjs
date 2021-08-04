@@ -1,5 +1,5 @@
 // @ts-check
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { reactive, watchEffect } from "@vue/runtime-core";
 
 /**
@@ -17,13 +17,20 @@ function touch(ref, proxy) {
   }
 }
 
+const EMPTY_ARRAY = []
+
+function useForceUpdate() {
+  const [, setValue] = useState(0);
+  return useCallback(() => setValue(e => ~e), EMPTY_ARRAY);
+}
+
 /**
  * use vue3's reactive in react hooks
  * @param {object} state - will be passed to vue's reactive()
  */
 export function useReactive(state) {
   const [react] = useState(() => reactive(state));
-  const [, forceUpdate] = useState(0);
+  const forceUpdate = useForceUpdate();
   const counter = useRef(0);
   useEffect(
     () =>
@@ -32,7 +39,7 @@ export function useReactive(state) {
           touch(state, react);
           counter.current++;
         } else {
-          forceUpdate((e) => ~e);
+          forceUpdate();
         }
       }),
     []
